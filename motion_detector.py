@@ -1,6 +1,8 @@
 import cv2, time
 from datetime import datetime
 import pandas
+# from bokeh.io import output_file, show
+# from bokeh.plotting import figure
 
 df = pandas.DataFrame(columns=["Start","End"])
 first_frame = None
@@ -35,6 +37,8 @@ while True:
 
     status_list.append(status)
 
+    status_list = status_list[-2:]
+
     if status_list[-1] ==1 and status_list[-2]==0:
         times.append(datetime.now())
     if status_list[-1] ==0 and status_list[-2]==1:
@@ -64,3 +68,9 @@ df.to_csv("times.csv")
 
 video.release()
 cv2.destroyAllWindows()
+
+#plotting the motion graph
+# f=figure()
+# f.line(df.Start,df.End)
+# output_file("motion_chart.html")
+# show(f)
